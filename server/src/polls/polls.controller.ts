@@ -1,21 +1,34 @@
 import { Body, Controller, Post } from "@nestjs/common";
 import type { CreatePollDto, JoinPollDto } from "./dtos";
+import type { PollsService } from "./polls.service";
 
 @Controller('polls')
 export class PollsController {
+  constructor(private pollsService: PollsService) {}
+
 
   @Post()
   async create(@Body() createPollDto: CreatePollDto) {
-    return createPollDto
+    const result = await this.pollsService.createPoll(createPollDto);
+
+    return result;
   }
 
   @Post('/join')
   async join(@Body() joinPollDto: JoinPollDto) {
-    return joinPollDto
+    const result = await this.pollsService.joinPoll(joinPollDto);
+
+    return result;
   }
 
   @Post('/rejoin')
   async rejoin() {
-    
+    const result = await this.pollsService.rejoinPoll({
+      name: 'From token',
+      pollID: 'Also from token',
+      userID: 'Guess where this comes from?',
+    });
+
+    return result;
   }
 }
