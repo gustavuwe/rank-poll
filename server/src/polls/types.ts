@@ -25,3 +25,9 @@ export type CreatePollData = {
   votesPerVoter: number;
   userID: string;
 }
+
+export type AddParticipantData = {
+  pollID: string;
+  userID: string;
+  name: string;
+}
